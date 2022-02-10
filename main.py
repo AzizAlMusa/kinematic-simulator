@@ -17,10 +17,6 @@ from math import sin, cos, atan2
 def main():
     
  
-
-    theta = np.deg2rad(0)
-    twist = np.pi/2
-    
     # numpy array [[theta, d, a, alpha], ...]
     y1 = -0.9
     
@@ -77,11 +73,15 @@ def main():
    
  
     ########### ARM CREATION ################
+    # arm = pickle.load( open( "denso_7.arm", "rb" ) )
+    
+    
     joints = np.array(joint_params, dtype=object)
     arm = Manipulator(joints, joint_limits)
     
 
-    
+    # filehandler = open('denso_6.arm', 'wb') 
+    # pickle.dump(arm, filehandler)
     ##################################
     ############ SINGLE PLOT #########
     #################################
@@ -96,18 +96,18 @@ def main():
     #################################
     
     
-    t = np.linspace(-0.5*np.pi, 3/2*np.pi, 50)
+    # t = np.linspace(-0.5*np.pi, 3/2*np.pi, 50)
     
    
     
-    x = 0.15*np.cos(t)
-    y = 0.15*np.sin(t) 
-    z = 0.1*np.sin(5*t) + 0.33
+    # x = 0.15*np.cos(t)
+    # y = 0.15*np.sin(t) 
+    # z = 0.1*np.sin(5*t) + 0.33
     
-    trajectory = np.zeros((t.shape[0], 3))  
-    trajectory[:, 0] = x
-    trajectory[:, 1] = y
-    trajectory[:, 2] = z
+    # trajectory = np.zeros((t.shape[0], 3))  
+    # trajectory[:, 0] = x
+    # trajectory[:, 1] = y
+    # trajectory[:, 2] = z
         
    
     # solution = arm.solve_trajectory(trajectory)
@@ -127,13 +127,13 @@ def main():
     #####          TURNTABLE DEMO         #####
     ###########################################
     
-    df = pd.read_csv('angles.csv')
+    # df = pd.read_csv('angles.csv')
   
-    solution = df.to_numpy()
+    # solution = df.to_numpy()
     
-    solution = solution.T[1:,:]
+    # solution = solution.T[1:,:]
     
-    plotter = ArmPlot(arm)
+    # plotter = ArmPlot(arm)
     
     # ones = np.ones((trajectory.shape[0], 1))
     
@@ -165,7 +165,7 @@ def main():
     #     arm.update_state(arm_waypoint)
     #     plotter.show(trajectory)
     
-    plotter.animate6(solution, trajectory)
+    #plotter.animate6(solution, trajectory)
     
     
 

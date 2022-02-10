@@ -6,7 +6,18 @@ Created on Thu Feb  3 21:59:05 2022
 """
 
 import numpy as np
+
+import matplotlib as mpl
+#mpl.rc('text', usetex = False)
+#mpl.rc('font', family = 'serif')
+#mpl.rcParams.update(mpl.rcParamsDefault)
+
 import matplotlib.pyplot as plt
+# plt.rcParams.update({
+#   "text.usetex": True,
+#   "font.family": "Helvetica"
+# })
+
 import matplotlib.animation as animation
 from matplotlib.animation import FuncAnimation
 import manipulator
@@ -37,29 +48,33 @@ class ArmPlot:
         
         T_chain = self.arm.get_forward_chain()
         
-        n = self.arm.state.shape[0] + 1
+        n = self.arm.state.shape[0] 
         
         end_points = np.zeros((n, 3))
       
         for i in range(T_chain.shape[0]):
             
-            end_points[i + 1, :] = self.transform_to_position(T_chain[i, :, :])
+            end_points[i , :] = self.transform_to_position(T_chain[i, :, :])
         
         return end_points
     
     #formatting only
     def format_fig(self, axes):
         
-           
+        
+        
+        #plt.style.use(['ggplot','dark_background'])
+       
         for i, ax in enumerate(axes):
             ax.axis('auto')
+            
             ax.set_xlim(-1.0,1.0)
             ax.set_ylim(-1.0, 1.0)
             ax.set_zlim(-1.0, 1.0)
             ax.grid()
-            ax.set_xlabel('x')
-            ax.set_ylabel('y')
-            ax.set_zlabel('z')
+            ax.set_xlabel('x', fontsize=24)
+            ax.set_ylabel('y', fontsize=24)
+            ax.set_zlabel('z', fontsize=24)
             
             if i == 0:
                 ax.view_init(azim=0, elev=90)
@@ -78,9 +93,12 @@ class ArmPlot:
         end_points = self.get_endpoints()
         
         fig = plt.figure(figsize=(1920/72, 1080/72), dpi=72)
+        fig.suptitle('Virtual Equivalent Trajectory', fontsize=38 )
+        
         ax = plt.subplot(1,2,1, projection='3d')
-        ax2 = plt.subplot(1,2,2, projection='3d')
        
+        ax2 = plt.subplot(1,2,2, projection='3d')
+        
         self.format_fig([ax, ax2])
         
         if type(trajectory) is np.ndarray:
@@ -110,20 +128,20 @@ class ArmPlot:
         end_points = self.get_endpoints()
         
         fig = plt.figure(figsize=(1920/72, 1080/72), dpi=72)
-        
+        fig.suptitle('Virtual Equivalent Trajectory', fontsize=44)
         ax = plt.subplot(1,2,1, projection='3d')
         ax2 = plt.subplot(1,2,2, projection='3d')
         
-       
+        #fig.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=None, hspace=None)
         
         axes = [ax, ax2]
         self.format_fig(axes)
         
         N = end_points.shape[0]-1
         
-        line = [ax.plot3D([], [],[])[0] for _ in range(N)] #lines to animate
+        line = [ax.plot3D([], [], [])[0] for _ in range(N)] #lines to animate
         
-        line2 = [ax2.plot3D([], [],[])[0] for _ in range(N)] #lines to animate
+        line2 = [ax2.plot3D([], [], [])[0] for _ in range(N)] #lines to animate
         
         lines = line + line2
         
@@ -135,9 +153,7 @@ class ArmPlot:
                      
         def update(i):
               
-            
-              
-       
+   
               current_state = solution[i, :]
               self.arm.update_state(current_state)
               end_points = copy.deepcopy(self.get_endpoints())
@@ -146,6 +162,7 @@ class ArmPlot:
              
               
               for j in range(N):
+                  
                   lines[j].set_data(end_points[j:j+2, 0], end_points[j:j+2, 1])
                   lines[j].set_3d_properties(end_points[j:j+2,2])
                   
@@ -188,7 +205,7 @@ class ArmPlot:
         end_points = self.get_endpoints()
         
         fig = plt.figure(figsize=(1920/72, 1080/72), dpi=72)
-        
+        fig.suptitle('Actual Trajectory', fontsize=16)
         ax = plt.subplot(1,2,1, projection='3d')
         ax2 = plt.subplot(1,2,2, projection='3d')
         
@@ -258,13 +275,13 @@ class ArmPlot:
                   lines[j].set_3d_properties(end_points[j:j+2,2])
                   
                   lines[j].set_linewidth(10)
-                  lines[j].set_color(self.colors[j])
+                  lines[j].set_color(self.colors[j+1])
                   
                   lines[j+N].set_data(end_points[j:j+2, 0], end_points[j:j+2, 1])
                   lines[j+N].set_3d_properties(end_points[j:j+2,2])
                   
                   lines[j+N].set_linewidth(10)
-                  lines[j+N].set_color(self.colors[j])
+                  lines[j+N].set_color(self.colors[j+1])
   
                  
                   
