@@ -12,7 +12,7 @@ from matplotlib.animation import FuncAnimation
 import manipulator
 from math import cos, sin
 
-
+from datetime import datetime
 import copy
 import pdb
 
@@ -170,7 +170,10 @@ class ArmPlot:
         anim = FuncAnimation(fig, update, frames=frame_count, interval=20, blit=True)
    
         writergif = animation.PillowWriter(fps=12) 
-        anim.save('test4.gif', writer=writergif)
+        
+        now = datetime.now()
+        stamp = str(now.date()) + str(now.hour) + str(now.minute) + str(now.second)
+        anim.save('animations/7DOF ARM_' + stamp + '_.gif', writer=writergif)
 
 
 
@@ -275,7 +278,10 @@ class ArmPlot:
         anim = FuncAnimation(fig, update, frames=frame_count, interval=20, blit=True)
    
         writergif = animation.PillowWriter(fps=12) 
-        anim.save('test4.gif', writer=writergif)
+        
+        now = datetime.now()
+        stamp = str(now.date()) + str(now.hour) + str(now.minute) + str(now.second)
+        anim.save('animations/6DOF ARM_' + stamp + '_.gif', writer=writergif)
         
         
         

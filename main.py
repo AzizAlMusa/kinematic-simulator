@@ -35,41 +35,41 @@ def main():
     z6 = 0.08
     
     
-    joint_limits = ( (-6.283185, 6.283185),
-                      (-2.96706,  2.96706),
-                      (-1.745329, 2.356194),
-                      (-2.076942, 2.949606),
-                      (-3.316126, 3.316126),
-                      (-2.094395, 2.094395),
-                      (-6.283185, 6.283185))
-    
-    
-    joint_params = [[0, 0, 0, 0, np.array([0, 0, 1])],
-                    [0, 0, y1, 0, np.array([0, 0, 1])],
-                    [0, x2, 0, z2 , np.array([0, 1, 0])],
-                    [0, 0, 0, z3, np.array([0, 1, 0])],
-                    [0, x4, 0, z4, np.array([0, 0, 1])],
-                    [0, 0, 0, z5, np.array([0, 1, 0])],
-                    [0, 0, 0, z6, np.array([0, 0, 1])]]
-    
-   
-    
-    
-    
-    
-    # joint_limits = (  (-2.96706,  2.96706),
+    # joint_limits = ( (-6.283185, 6.283185),
+    #                   (-2.96706,  2.96706),
     #                   (-1.745329, 2.356194),
     #                   (-2.076942, 2.949606),
     #                   (-3.316126, 3.316126),
     #                   (-2.094395, 2.094395),
     #                   (-6.283185, 6.283185))
     
-    # joint_params = [[0, 0, y1, 0, np.array([0, 0, 1])],
+    
+    # joint_params = [[0, 0, 0, 0, np.array([0, 0, 1])],
+    #                 [0, 0, y1, 0, np.array([0, 0, 1])],
     #                 [0, x2, 0, z2 , np.array([0, 1, 0])],
     #                 [0, 0, 0, z3, np.array([0, 1, 0])],
     #                 [0, x4, 0, z4, np.array([0, 0, 1])],
     #                 [0, 0, 0, z5, np.array([0, 1, 0])],
     #                 [0, 0, 0, z6, np.array([0, 0, 1])]]
+    
+   
+    
+    
+    
+    
+    joint_limits = (  (-2.96706,  2.96706),
+                      (-1.745329, 2.356194),
+                      (-2.076942, 2.949606),
+                      (-3.316126, 3.316126),
+                      (-2.094395, 2.094395),
+                      (-6.283185, 6.283185))
+    
+    joint_params = [[0, 0, y1, 0, np.array([0, 0, 1])],
+                    [0, x2, 0, z2 , np.array([0, 1, 0])],
+                    [0, 0, 0, z3, np.array([0, 1, 0])],
+                    [0, x4, 0, z4, np.array([0, 0, 1])],
+                    [0, 0, 0, z5, np.array([0, 1, 0])],
+                    [0, 0, 0, z6, np.array([0, 0, 1])]]
     
     
     
@@ -110,16 +110,16 @@ def main():
     trajectory[:, 2] = z
         
    
-    solution = arm.solve_trajectory(trajectory)
+    # solution = arm.solve_trajectory(trajectory)
     
     
-    df = pd.DataFrame((solution.T))
+    # df = pd.DataFrame((solution.T))
    
-    df.to_csv('angles.csv')
-    print(pd.DataFrame(np.rad2deg(solution.T)))
-    plotter = ArmPlot(arm)
+    # df.to_csv('angles.csv')
+    # print(pd.DataFrame(np.rad2deg(solution.T)))
+    # plotter = ArmPlot(arm)
     
-    plotter.animate7(solution, trajectory)
+    # plotter.animate7(solution, trajectory)
     
     
     
@@ -127,13 +127,13 @@ def main():
     #####          TURNTABLE DEMO         #####
     ###########################################
     
-    # df = pd.read_csv('angles.csv')
+    df = pd.read_csv('angles.csv')
   
-    # solution = df.to_numpy()
+    solution = df.to_numpy()
     
-    # solution = solution.T[1:,:]
+    solution = solution.T[1:,:]
     
-    # plotter = ArmPlot(arm)
+    plotter = ArmPlot(arm)
     
     # ones = np.ones((trajectory.shape[0], 1))
     
@@ -165,7 +165,7 @@ def main():
     #     arm.update_state(arm_waypoint)
     #     plotter.show(trajectory)
     
-    # plotter.animate6(solution, trajectory)
+    plotter.animate6(solution, trajectory)
     
     
 
