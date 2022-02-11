@@ -33,7 +33,7 @@ class ArmPlot:
         
         self.arm = arm
         
-        self.colors = ['pink', 'red', 'darkorange', 'gold', 'blue', 'indigo', 'black']
+        self.colors = ['pink', '#D6E22B', '#3CB875', '#239B89', '#365C8C', '#472775', '#440154']
         
         
         
@@ -81,11 +81,7 @@ class ArmPlot:
                 
         
         
-      
-        
-       
-        
-        
+    
     
     #plot the arm
     def show(self, trajectory=None):
@@ -190,6 +186,7 @@ class ArmPlot:
         
         now = datetime.now()
         stamp = str(now.date()) + str(now.hour) + str(now.minute) + str(now.second)
+        print("Saving 7DOF arm animation to " + 'animations/6DOF ARM_' + stamp + '_.gif...')
         anim.save('animations/7DOF ARM_' + stamp + '_.gif', writer=writergif)
 
 
@@ -298,6 +295,7 @@ class ArmPlot:
         
         now = datetime.now()
         stamp = str(now.date()) + str(now.hour) + str(now.minute) + str(now.second)
+        print('Saving 6DOF arm animation to ' + 'animations/6DOF ARM_' + stamp + '_.gif...')
         anim.save('animations/6DOF ARM_' + stamp + '_.gif', writer=writergif)
         
         

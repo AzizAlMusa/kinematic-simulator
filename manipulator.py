@@ -100,14 +100,14 @@ class Manipulator:
     
     
 
-    # get end-effector transform
+    # get transform at a specified joint
     # shape: 4 x 4
     def get_forward(self,   joints=None, joint_idx=-1,):   
            
         return self.get_forward_chain(joints)[joint_idx, : , :]
     
     
-    # get end-effector position
+    # get position at a specified joint
     # shape: 3 x 1
     def get_position(self, joints=None, joint_idx=-1):    
         
@@ -119,7 +119,7 @@ class Manipulator:
         return self.get_forward(joints, joint_idx)[:3, 3].reshape(-1,1)
         
     
-    
+    # TODO
     def matrix_to_euler(self, R):
         
         roll1, roll2 = None, None
@@ -127,7 +127,7 @@ class Manipulator:
         yaw1, yaw2 = None, None
         
         if np.abs(R[2,0]) != 1:
-            # TODO Complete this
+           
            
             roll1 = -asin(R[2,0])
             roll2 = np.pi - roll1
@@ -155,7 +155,7 @@ class Manipulator:
         return angles1, angles2
         
             
-    
+    # TODO
     def get_orientation(self, joints=None, joint_idx=-1):
         
         if not type(joints) is np.ndarray:
@@ -267,7 +267,7 @@ class Manipulator:
             
         joints_1 = copy.deepcopy(self.joints)
         
-        # TODO add minimizer here
+        # TODO add constraint for end effector orientation
         
         ## constraint format
         #  cons=({'type': 'ineq','fun': lambda x: x[0]},
@@ -279,19 +279,20 @@ class Manipulator:
        
         limits = self.joint_limits
         optim = optimize.minimize(self.cost_function, state_1, args=(desired, joints_1) ,  bounds=limits)
-        #print(optim.x)
+      
         return optim.x
     
     
-    #Need to debug
+    # outputs a N x joints array of waypoints
     def solve_trajectory(self, trajectory):
         
         num_points = trajectory.shape[0]
         num_joints = self.joints.shape[0]
         
         angle_solution = np.zeros((num_points, num_joints))
-        print(angle_solution.shape)
-        
+        print("--------------------------------------------------------------------")
+        print('Solving for ' + str(num_joints) + ' joints through a trajectory of ' + str(num_points) + ' points...')
+        print("--------------------------------------------------------------------")
         prev_state = self.state
         for i in range(num_points):
             
@@ -302,7 +303,7 @@ class Manipulator:
             
             
          
-        print('Solution found.')
+        print('*** Solution completed ***')
         
         return angle_solution
     
