@@ -20,10 +20,10 @@ def main():
     ###########################################
     #####             ARM LOAD            #####
     ###########################################
-    arm7 = pickle.load( open( "denso_7.arm", "rb" ) )
-    arm6 = pickle.load( open( "denso_6.arm", "rb" ) )
+    #arm7 = pickle.load( open( "denso_7.arm", "rb" ) )
+    #arm6 = pickle.load( open( "denso_6.arm", "rb" ) )
    
-
+    arm6 = pickle.load( open( "denso_6_actual.arm", "rb" ) )
     ###########################################
     #####           VISUAL CHECK          #####
     ###########################################
