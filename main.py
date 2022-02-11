@@ -56,7 +56,7 @@ def main():
     #####          WAYPOINT SOLVER        #####
     ###########################################
     
-    solution = arm7.solve_trajectory(trajectory)
+    solution = arm6.solve_trajectory(trajectory)
     
     
     df = pd.DataFrame((solution.T))
@@ -64,7 +64,7 @@ def main():
     print("Saving waypoints to 'waypoints.csv'")
     df.to_csv('waypoints.csv')
     print(pd.DataFrame(np.rad2deg(solution.T)))
-    plotter = ArmPlot(arm7)
+    plotter = ArmPlot(arm6)
     
     plotter.animate7(solution, trajectory)
     
@@ -74,15 +74,15 @@ def main():
     #####          TURNTABLE DEMO         #####
     ###########################################
     
-    df = pd.read_csv('waypoints.csv')
+    # df = pd.read_csv('waypoints.csv')
   
-    solution = df.to_numpy()
+    # solution = df.to_numpy()
     
-    solution = solution.T[1:,:]
+    # solution = solution.T[1:,:]
     
-    plotter = ArmPlot(arm6)
+    # plotter = ArmPlot(arm6)
 
-    plotter.animate6(solution, trajectory)
+    # plotter.animate6(solution, trajectory)
     
     
 
